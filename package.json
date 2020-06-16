@@ -1,0 +1,35 @@
+{
+  "name": "nodejs_project",
+  "version": "1.0.0",
+  "description": "Development of the server side for Godel designers application",
+  "main": "service.js",
+  "scripts": {
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate",
+    "db:seed": "./node_modules/.bin/sequelize db:seed:all",
+    "db:undo": "./node_modules/.bin/sequelize db:migrate:undo:all",
+    "db:prepare": "npm run db:undo && npm run db:migrate && npm run db:seed",
+    "start": "nodemon $npm_package_main",
+    "build": "cd public/css && cleancss -o main.min.css main.css",
+    "start-sass": "sass --watch public/scss/main.scss public/css/main.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "clean-css-cli": "^4.3.0",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "pg": "^8.2.1",
+    "pug": "^2.0.4",
+    "sass": "^1.26.5",
+    "sequelize": "^5.21.11",
+    "sequelize-cli": "^5.5.1",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,0 +1,5 @@
+{
+	"database": {
+		"connectionString": "postgres://postgres:postgres@localhost:5432/godel_designers_server"
+	}
+}

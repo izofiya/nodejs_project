@@ -1,0 +1,10 @@
+const { join } = require('path');
+const path = tail => join(__dirname, tail);
+
+module.exports = {
+    "config": path("db/config.js"),
+    "migrations-path": path("db/migrations"),
+    "seeders-path": path("db/seeders"),
+    "models-path": path("src/models")
+};
+
