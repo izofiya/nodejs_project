@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const logger = require("../services/logger");
 
 module.exports = (sequelize, DataTypes) => {
@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      salt: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       photo: DataTypes.STRING,
     },
     {
@@ -31,17 +35,16 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "users",
     }
   );
-  User.associate = function(models) {
-		User.belongsTo(models.Role, { foreignKey: 'roleId', as: "role" });
-	};
+  User.associate = function (models) {
+    User.belongsTo(models.Role, { foreignKey: "roleId", as: "role" });
+  };
 
   User.authenticate = async function (email, password) {
     const user = await User.findOne({
       where: { email },
       attributes: { exclude: ["email", "createdAt", "updatedAt"] },
     });
-    console.log(password);
-    if (bcrypt.compareSync(password, user.password)) {
+    if (crypto.scryptSync(password, user.salt, 32)) {
       return user;
     } else {
       logger.error("Invalid password");

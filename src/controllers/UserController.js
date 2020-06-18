@@ -1,6 +1,6 @@
 const { User } = require("../models");
 const logger = require("../services/logger");
-const bcrypt = require("bcryptjs");
+const userpassword = require("../helpers/saltHashPassword");
 
 module.exports = {
   async getUsers(req, res) {
@@ -24,11 +24,12 @@ module.exports = {
   async createUser(req, res) {
     try {
       const { fullName, email, password, photo, roleId } = req.body;
-      let hash = bcrypt.hashSync(password, 10);
+      const { salt, passwordHash } = userpassword(password);
       const user = await User.create({
         fullName,
         email,
-        password: hash,
+        password: passwordHash,
+        salt,
         photo,
         roleId,
       });

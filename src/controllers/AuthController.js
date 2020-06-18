@@ -12,7 +12,7 @@ module.exports = {
 	  const user = await User.authenticate(email, password);
       if (user) {
         const userJson = user.toJSON();
-        const { password, ...userWithoutPassword } = userJson;
+        const { password, salt, ...userWithoutPassword } = userJson;
         logger.info("Loged in");
         res.send({
           user: userWithoutPassword,
